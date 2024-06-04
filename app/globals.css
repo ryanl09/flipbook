@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    box-sizing: border-box;
+}
+
+.card {
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0px;
+}
+
+.card:hover {
+    top: -4px;
+    /*transform: rotateY(180deg);*/
+}
