@@ -19,6 +19,11 @@ const config: Config = {
       'primary': '#4797C8',
       'primary-h': '#227CB3',
       'secondary': '#7796bc',
+      'red-200': '#DE5543',
+      'red-100': '#C64A3A',
+      'white': '#fff',
+      'green-200': '#4ECA59',
+      'green-100': '#45AB4E'
     }
   },
   plugins: [],
