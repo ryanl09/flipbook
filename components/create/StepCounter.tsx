@@ -4,20 +4,39 @@ import { FaImage } from "react-icons/fa";
 import { IoMdCamera } from "react-icons/io";
 import { RiBook2Fill } from "react-icons/ri";
 
+interface StepIcon {
+    title: string;
+    icon: React.ReactNode;
+}
+
 const StepCounter = ({ step }: {
     step: number;
 }) => {
 
-    const icons = [<IoMdCamera />, <FaImage />, <AiFillPrinter />, <RiBook2Fill />];
+    const icons: StepIcon[] = [
+        {
+            title: 'camera',
+            icon: <IoMdCamera />
+        }, {
+            title: 'image',
+            icon: <FaImage />
+        }, {
+            title: 'printer',
+            icon: <AiFillPrinter />
+        }, {
+            title: 'book',
+            icon: <RiBook2Fill />
+        }
+    ];
 
     return (
         <div className='flex items-center justify-between mx-auto' style={{
             width: 'clamp(100px, 50vw, 300px)'
         }}>
-            {icons.map((icon, index) => {
+            {icons.map((e: StepIcon, index: number) => {
                 return (
-                    <React.Fragment key={`step-${index}`}>
-                        <Step isCurrent={index + 1 === step} icon={icon} />
+                    <React.Fragment key={`step-${e.title}`}>
+                        <Step isCurrent={index + 1 === step} icon={e.icon} />
                     </React.Fragment>
                 )
             })}

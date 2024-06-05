@@ -73,7 +73,7 @@ const Camera = ({ onCaptured }: {
 
         clearInterval(intervalId);
         setIntervalId(null);
-    }, [images]);
+    }, [images, captureCount, intervalId]);
 
     const takePhotos = (): void => {
         setImages([]);

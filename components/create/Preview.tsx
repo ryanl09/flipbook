@@ -34,7 +34,6 @@ const PreviewBook = ({ images }: {
 
         ctx.fillStyle = '#fff';
         ctx.font = '40px Arial'
-        console.log(images[current].width, images[current].height)
         ctx.drawImage(images[current], 0, 0);
         ctx.fillText(current.toString(), 10, 10);
     }, [current]);
