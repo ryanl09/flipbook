@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${redHatDisplay.className} bg-background`}>{children}</body>
+      <body className={`${redHatDisplay.className} bg-background relative`}>{children}</body>
     </html>
   );
 }

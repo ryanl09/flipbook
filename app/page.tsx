@@ -5,18 +5,13 @@ import { FaImage } from "react-icons/fa";
 import { IoMdCamera } from "react-icons/io";
 import { IoAddCircle } from "react-icons/io5";
 import { RiBook2Fill } from "react-icons/ri";
+import Logo from "@/components/Logo";
 
 export default function Home(): JSX.Element {
   return (
     <main className="">
       <nav className="p-4 flex items-center">
-        <div className="font-bold text-2xl flex items-center gap-2">
-          <Image src="/fb-transparent-sized.png" width={30} height={30} alt="" />
-          <span>
-            Flip
-            <span className="text-primary">Book</span>
-          </span>
-        </div>
+        <Logo />
         <div className="ml-auto">
           <Link href='/create'>
             <button className="bg-primary text-background px-3 py-1 rounded-lg font-semibold
