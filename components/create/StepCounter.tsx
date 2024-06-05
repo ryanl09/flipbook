@@ -3,11 +3,7 @@ import { AiFillPrinter } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
 import { IoMdCamera } from "react-icons/io";
 import { RiBook2Fill } from "react-icons/ri";
-
-interface StepIcon {
-    title: string;
-    icon: React.ReactNode;
-}
+import { StepIcon } from '@/global/types';
 
 const StepCounter = ({ step }: {
     step: number;
