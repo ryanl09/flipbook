@@ -5,6 +5,7 @@ import ProgressBar from "../form/ProgressBar";
 import PreviewBook from "../create/Preview";
 import { useCaptureCount } from "../context/CaptureCountProvider";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { BiChevronRight } from "react-icons/bi";
 
 const RemoveBackground = ({ images, onCompleted }: {
     images: HTMLImageElement[];
@@ -57,6 +58,11 @@ const RemoveBackground = ({ images, onCompleted }: {
         setIsRemoving(false);
     };
 
+    const skipBgRemoval = (): void => {
+        onCompleted(images);
+        setIsRemoving(false);
+    }
+
     return isRemoving ? (
         <>
             <div className='flex items-center gap-2'>
@@ -77,11 +83,16 @@ const RemoveBackground = ({ images, onCompleted }: {
                     </div>
                 </>
             ) : (
-
-                <button className="text-background bg-primary hover:bg-primary-h transition-colors px-3 py-1 rounded-lg"
-                    onClick={processImages}>
-                    Remove Backgrounds
-                </button>
+                <>
+                    <button className="text-background bg-primary hover:bg-primary-h transition-colors px-3 py-1 rounded-lg"
+                        onClick={processImages}>
+                        Remove Backgrounds
+                    </button>
+                    <button className="flex items-center gap-2 underline text-primary" onClick={skipBgRemoval}>
+                        Skip
+                        <BiChevronRight />
+                    </button>
+                </>
             )}
         </>
     )

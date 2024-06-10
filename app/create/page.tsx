@@ -53,7 +53,8 @@ const PageCreate = (): JSX.Element => {
                     )}
 
                     {step === 3 && (
-                        <PrintBook />
+                        <PrintBook
+                            images={images} />
                     )}
 
                     <div className='hidden absolute md:flex bottom-0 py-4 w-full items-center justify-center'>
