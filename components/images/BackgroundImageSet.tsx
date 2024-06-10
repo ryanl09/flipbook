@@ -5,6 +5,7 @@ const BackgroundImageSet = ({ onSelected }: {
     onSelected: (img: HTMLImageElement) => void|Promise<void>;
 }): JSX.Element => {
     const [bgImages, setBgImages] = useState<HTMLImageElement[]>([]);
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
     useEffect(() => {
         const getImage = async(): Promise<void> => {
@@ -18,6 +19,10 @@ const BackgroundImageSet = ({ onSelected }: {
         getImage();
     }, []);
 
+    const onImageSelected = (index: number): void  => {
+        onSelected(bgImages[index]);
+        setSelectedIndex(index);
+    }
     
 
     return (
@@ -26,8 +31,8 @@ const BackgroundImageSet = ({ onSelected }: {
                 return (
                     <div className='col-span-6 md:col-span-4 lg:col-span-3' key={e.src}>
                         <SelectableImage img={e} onClick={() => {
-                            onSelected(bgImages[index])
-                        }} />
+                            onImageSelected(index)
+                        }} isSelected={index === selectedIndex} />
                     </div>
                 )
             })}
@@ -35,13 +40,19 @@ const BackgroundImageSet = ({ onSelected }: {
     )
 }
 
-const SelectableImage = ({ img, onClick }: {
+const SelectableImage = ({ img, onClick, isSelected }: {
     img: HTMLImageElement;
     onClick: () => void|Promise<void>;
+    isSelected: boolean;
 }): JSX.Element => {
+
+    let borderStyle = isSelected ? 'border-2 border-gray-100 p-1 rounded-lg transition-all' : ''
+    
     return (
-        <img src={img.src} width={img.width} height={img.height} alt=''
-            className='rounded-lg cursor-pointer hover:scale-105 transition-all hover:shadow-sm' onClick={onClick} />
+        <div className={borderStyle}>
+            <img src={img.src} width={img.width} height={img.height} alt=''
+                className={`rounded-lg cursor-pointer hover:scale-105 transition-all hover:shadow-sm`} onClick={onClick} />
+        </div>
     )
 }
 

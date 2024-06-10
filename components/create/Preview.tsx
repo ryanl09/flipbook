@@ -63,8 +63,11 @@ const PreviewBook = ({ images, backgroundImage }: {
             return;
         }
 
+        if (backgroundImage) {
+            ctx.drawImage(backgroundImage, 0, 0);
+        }
         ctx.drawImage(images[0], 0, 0);
-    }, [images, ctx]);
+    }, [images, ctx, backgroundImage]);
 
     return (
         <>

@@ -6,6 +6,7 @@ import VideoUpload from '../upload/VideoUpload';
 import TakePhotosModal from '../images/TakePhotosModal';
 import PreviewBook from '@/components/create/Preview';
 import { AiFillMinusCircle } from 'react-icons/ai';
+import StepContainer from '../form/StepContainer';
 
 const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
     onCompleted: (images: HTMLImageElement[]) => void|Promise<void>;
@@ -23,9 +24,7 @@ const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
     }
 
     return (
-        <div style={{
-            width: 'clamp(300px, 80%, 1200px)'
-        }} className='bg-[#fff] shadow-sm rounded-lg p-4 relative'>
+        <StepContainer>
             <h1 className='font-semibold text-2xl'>Photos</h1>
             <div className='grid grid-cols-12 gap-2'>
                 {!hasImages ? (
@@ -70,7 +69,7 @@ const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
                     <BiChevronRight />
                 </button>
             </div>
-        </div>
+        </StepContainer>
     )
 }
 
