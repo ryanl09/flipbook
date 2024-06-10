@@ -3,9 +3,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import ProgressBar from '../form/ProgressBar';
 import PreviewBook from './Preview';
-import { AiOutlineLoading3Quarters, AiFillCloseCircle } from 'react-icons/ai';
+import { AiOutlineLoading3Quarters, AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai';
 import RemoveBackground from '../background/RemoveBackground';
 import BackgroundImageSet from '../images/BackgroundImageSet';
+import StepContainer from '../form/StepContainer';
 
 const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
     images: HTMLImageElement[];
@@ -13,13 +14,13 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
     goBack: () => void;
     proceed: () => void;
 }): JSX.Element => {
-
-    const hasBackground = useMemo(() => {
-        return false;
-    }, []);
-
     const [removedBgs, setRemovedBgs] = useState<boolean>(false);
     const [backgroundImage, setBackgroundImage] = useState<HTMLImageElement|null>(null);
+
+    const hasBackground = useMemo(() => {
+        return backgroundImage !== null;
+    }, [backgroundImage]);
+
     
     const confirmBack = (): void => {
         /*
@@ -40,13 +41,11 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
     }
 
     const onBackgroundSelected = (backgroundImage: HTMLImageElement): void => {
-
+        setBackgroundImage(backgroundImage);
     }
 
     return (
-        <div style={{
-            width: 'clamp(300px, 80%, 1200px)'
-        }} className='bg-[#fff] shadow-sm rounded-lg p-4 relative'>
+        <StepContainer>
             <h1 className='font-semibold text-2xl'>Background</h1>
             <div className='grid grid-cols-12 gap-2'>
                 <div className='col-span-12'>
@@ -54,22 +53,32 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
                         images={images}
                         onCompleted={onBgRemovalCompleted} />
                 </div>
-                <div className="col-span-12 md:col-span-6">
-                    {removedBgs && (
-                        <>
-                            <div className='col-span-12 md:col-span-6'>
-                                <div className='flex items-center gap-2 text-gray-100'>
+                {removedBgs && (
+                    <>
+                        <div className='col-span-12'>
+                            <div className={`flex items-center gap-2 ${hasBackground ? 'text-green-200' : 'text-gray-100'}`}>
+                                {hasBackground ? (
+                                    <AiFillCheckCircle />
+                                ) : (
                                     <AiFillCloseCircle />
-                                    Select background
-                                </div>
+                                )}
+                                <span>Select background</span>
                             </div>
+                        </div>
+                        <div className='col-span-12 md:col-span-6'>
+                            <BackgroundImageSet
+                                onSelected={onBackgroundSelected} />
+                        </div>
+                        {backgroundImage !== null && (
                             <div className='col-span-12 md:col-span-6'>
-                                <BackgroundImageSet
-                                    onSelected={onBackgroundSelected} />
+                                <PreviewBook
+                                    images={images}
+                                    backgroundImage={backgroundImage} />
                             </div>
-                        </>
-                    )}
-                </div>
+                        )}
+                        
+                    </>
+                )}
             </div>
             <div className='mx-5 my-3'>&nbsp;</div>
             <div className='absolute p-2 left-0 bottom-0 right-0 flex items-center '>
@@ -84,7 +93,7 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
                     <BiChevronRight />
                 </button>
             </div>
-        </div>
+        </StepContainer>
     )
 }
 
