@@ -54,7 +54,9 @@ const PageCreate = (): JSX.Element => {
 
                     {step === 3 && (
                         <PrintBook
-                            images={images} />
+                            images={images}
+                            goBack={goBack}
+                            proceed={proceed} />
                     )}
 
                     <div className='hidden absolute md:flex bottom-0 py-4 w-full items-center justify-center'>
