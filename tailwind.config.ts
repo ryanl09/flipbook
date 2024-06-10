@@ -23,7 +23,8 @@ const config: Config = {
       'red-100': '#C64A3A',
       'white': '#fff',
       'green-200': '#4ECA59',
-      'green-100': '#45AB4E'
+      'green-100': '#45AB4E',
+      'gray-100': '#7D7E7F'
     }
   },
   plugins: [],

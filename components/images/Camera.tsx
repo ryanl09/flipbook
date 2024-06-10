@@ -3,6 +3,7 @@ import PreviewBook from '../create/Preview';
 import { AiOutlineLoading, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BiChevronRight } from 'react-icons/bi';
 import ProgressBar from '../form/ProgressBar';
+import { useCaptureCount } from '../context/CaptureCountProvider';
 
 const IW = 300,
       IH = 300;
@@ -17,14 +18,17 @@ const Camera = ({ onCaptured }: {
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout|null>(null);
 
-    const [captureCount, setCaptureCount] = useState<number>(40);
-    const updateCaptureCount = (e: React.ChangeEvent<HTMLInputElement>): void => setCaptureCount(parseInt(e.target.value, 10));
+    const { captureCount, updateCaptureCount } = useCaptureCount();
+    /*
+    const [captureCount, setCaptureCount] = useState<number>(40);*/
+    const updateCount = (e: React.ChangeEvent<HTMLInputElement>): void => updateCaptureCount(parseInt(e.target.value, 10));
 
     const [captureDelay, setCaptureDelay] = useState<number>(.1); //seconds
     const updateCaptureDelay = (e: React.ChangeEvent<HTMLInputElement>): void => setCaptureDelay(parseInt(e.target.value, 10));
 
     const [loadingVideo, setLoadingVideo] = useState<boolean>(true);
     const [stream, setStream] = useState<MediaStream|null>(null);
+
 
     useEffect(() => {
         if (typeof navigator === 'undefined') {
@@ -112,7 +116,7 @@ const Camera = ({ onCaptured }: {
                     <label className='font-medium text-sm'>Capture Count</label>
                     <div>
                         <input type='number' value={captureCount} min={10} max={40}
-                            onChange={updateCaptureCount} className='px-3 py-1 outline-none bg-background rounded-lg
+                            onChange={updateCount} className='px-3 py-1 outline-none bg-background rounded-lg
                             border border-[#e6e6e6]' />
                     </div>
                     <label className='font-medium text-sm'>Capture Delay (seconds)</label>

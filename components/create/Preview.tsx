@@ -6,8 +6,9 @@ const CW = 300,
 
 const PLAYBACK_INTERVAL = 50; //ms
 
-const PreviewBook = ({ images }: {
+const PreviewBook = ({ images, backgroundImage }: {
     images: HTMLImageElement[];
+    backgroundImage?: HTMLImageElement;
 }): JSX.Element => {
     const [ctx, setCtx] = useState<CanvasRenderingContext2D|null>(null);
     const intervalId = useRef<NodeJS.Timeout|null>(null);
@@ -34,6 +35,9 @@ const PreviewBook = ({ images }: {
 
         ctx.fillStyle = '#fff';
         ctx.font = '40px Arial'
+        if (backgroundImage){
+            ctx.drawImage(backgroundImage, 0, 0);
+        }
         ctx.drawImage(images[current], 0, 0);
         ctx.fillText(current.toString(), 10, 10);
     }, [current]);
@@ -53,6 +57,14 @@ const PreviewBook = ({ images }: {
 
         setPlaying(true);
     }
+
+    useEffect(() => {
+        if (!ctx || !images.length) {
+            return;
+        }
+
+        ctx.drawImage(images[0], 0, 0);
+    }, [images, ctx]);
 
     return (
         <>
