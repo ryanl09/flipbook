@@ -40,7 +40,7 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
     }
 
     const onBackgroundSelected = (backgroundImage: HTMLImageElement): void => {
-        
+
     }
 
     return (
@@ -64,7 +64,8 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
                                 </div>
                             </div>
                             <div className='col-span-12 md:col-span-6'>
-                                <BackgroundImageSet />
+                                <BackgroundImageSet
+                                    onSelected={onBackgroundSelected} />
                             </div>
                         </>
                     )}

@@ -8,7 +8,7 @@ const PLAYBACK_INTERVAL = 50; //ms
 
 const PreviewBook = ({ images, backgroundImage }: {
     images: HTMLImageElement[];
-    backgroundImage?: HTMLImageElement[];
+    backgroundImage?: HTMLImageElement;
 }): JSX.Element => {
     const [ctx, setCtx] = useState<CanvasRenderingContext2D|null>(null);
     const intervalId = useRef<NodeJS.Timeout|null>(null);
