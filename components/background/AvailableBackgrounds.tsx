@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 const AvailableBackgrounds = (): JSX.Element => {
 
-    const [bakckgrounds, setBackgrounds] = useState<string[]>([]);
+    const [backgrounds, setBackgrounds] = useState<string[]>([]);
 
     useEffect(() => {
         const loadBackgrounds = async(): Promise<void> => {
-            //...
+
         }
 
         loadBackgrounds();
