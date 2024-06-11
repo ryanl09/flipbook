@@ -8,6 +8,7 @@ import ChooseBackground from '@/components/create/ChooseBackground';
 import PrintBook from '@/components/create/PrintBook';
 import { CaptureCountProvider } from '@/components/context/CaptureCountProvider';
 import { DimensionsProvider } from '@/components/context/DimensionsProvider';
+import CountdownOverlay from '@/components/form/CountdownOverlay';
 
 const PageCreate = (): JSX.Element => {
     const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -40,20 +41,20 @@ const PageCreate = (): JSX.Element => {
                 <DimensionsProvider>
                     <div className='md:h-screen flex items-center justify-center'>
                         {step === 1 && (
-                            <GetPhotos 
-                                onCompleted={onStepCompleted}
-                                images={images}
-                                proceed={proceed}
-                                onClear={clearImages} />
-                        )}
-
-                        {step === 2 && (
                             <ChooseBackground
                                 onCompleted={onStepCompleted}
                                 images={images}
                                 goBack={goBack}
                                 proceed={proceed}
                                 onBackgroundChanged={setBackground} />
+                        )}
+                        
+                        {step === 2 && (
+                            <GetPhotos 
+                                onCompleted={onStepCompleted}
+                                images={images}
+                                proceed={proceed}
+                                onClear={clearImages} />
                         )}
 
                         {step === 3 && (

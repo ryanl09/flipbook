@@ -7,6 +7,7 @@ import { AiOutlineLoading3Quarters, AiFillCloseCircle, AiFillCheckCircle } from 
 import RemoveBackground from '../background/RemoveBackground';
 import BackgroundImageSet from '../images/BackgroundImageSet';
 import StepContainer from '../form/StepContainer';
+import CountdownOverlay from '../form/CountdownOverlay';
 
 const ChooseBackground = ({ images, onCompleted, goBack, proceed, onBackgroundChanged }: {
     images: HTMLImageElement[];
@@ -54,6 +55,14 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed, onBackgroundCh
                     <RemoveBackground
                         images={images}
                         onCompleted={onBgRemovalCompleted} />
+
+
+                    
+                        <div className='w-[200px] h-[120px] relative col-span-12'>
+                            <CountdownOverlay
+                                seconds={5}
+                                onFinished={()=> { console.log('countdown finished')}} />
+                        </div>
                 </div>
                 {removedBgs && (
                     <>
