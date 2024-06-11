@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model backgrounds {
+  background_id     String              @id @db.VarChar(36)
+  url               String              @db.VarChar(200)
+  active            Boolean             @default(true)
+  created           DateTime            @default(now()) @db.Timestamp(0)
+  modified          DateTime            @default(now()) @db.Timestamp(0)
+  event_backgrounds event_backgrounds[]
+}
+
+model event_backgrounds {
+  event_id      String      @db.VarChar(36)
+  background_id String      @db.VarChar(36)
+  active        Boolean     @default(true)
+  backgrounds   backgrounds @relation(fields: [background_id], references: [background_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_event_backgrounds_background_id")
+  events        events      @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_event_backgrounds_event_id")
+
+  @@id([event_id, background_id])
+  @@index([background_id], map: "fk_event_backgrounds_background_id")
+}
+
+model events {
+  event_id          String              @id @db.VarChar(36)
+  name              String              @db.VarChar(100)
+  date              DateTime            @db.Date
+  time              DateTime            @db.Time(0)
+  description       String?             @db.Text
+  active            Boolean             @default(true)
+  created           DateTime            @default(now()) @db.Timestamp(0)
+  modified          DateTime            @default(now()) @db.Timestamp(0)
+  event_backgrounds event_backgrounds[]
+}

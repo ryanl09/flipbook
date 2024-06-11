@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiPause, BiPlay } from 'react-icons/bi';
 import { useDimensions } from '../context/DimensionsProvider';
+import type { FlipImage } from '@/global/types';
 
 const PLAYBACK_INTERVAL = 50; //ms
 
-const PreviewBook = ({ images, backgroundImage }: {
-    images: HTMLImageElement[];
-    backgroundImage?: HTMLImageElement;
+const PreviewBook = ({ images }: {
+    images: FlipImage[];
 }): JSX.Element => {
     const [ctx, setCtx] = useState<CanvasRenderingContext2D|null>(null);
     const intervalId = useRef<NodeJS.Timeout|null>(null);
@@ -34,13 +34,16 @@ const PreviewBook = ({ images, backgroundImage }: {
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = '#fff';
-        ctx.font = '40px Arial'
-        if (backgroundImage){
-            ctx.drawImage(backgroundImage, 0, 0);
+        ctx.font = '40px Arial';
+
+        const cur = images[current];
+
+        if (cur.background){
+            ctx.drawImage(cur.background, 0, 0);
         }
-        ctx.drawImage(images[current], 0, 0);
+        ctx.drawImage(cur.image, 0, 0);
         ctx.fillText(current.toString(), 10, 10);
-    }, [current]);
+    }, [current, images]);
 
 
     const handlePlay = (): void => {
@@ -63,11 +66,13 @@ const PreviewBook = ({ images, backgroundImage }: {
             return;
         }
 
-        if (backgroundImage) {
-            ctx.drawImage(backgroundImage, 0, 0);
+        const cur = images[0];
+
+        if (cur.background) {
+            ctx.drawImage(cur.background, 0, 0);
         }
-        ctx.drawImage(images[0], 0, 0);
-    }, [images, ctx, backgroundImage]);
+        ctx.drawImage(cur.image, 0, 0);
+    }, [images, ctx]);
 
     return (
         <>

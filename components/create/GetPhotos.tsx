@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { BiChevronRight, BiCamera } from 'react-icons/bi';
+import { BiChevronRight, BiChevronLeft, BiCamera } from 'react-icons/bi';
 import Camera from '../images/Camera';
 import PhotoUpload from '../upload/PhotoUpload';
 import VideoUpload from '../upload/VideoUpload';
@@ -7,12 +7,16 @@ import TakePhotosModal from '../images/TakePhotosModal';
 import PreviewBook from '@/components/create/Preview';
 import { AiFillMinusCircle } from 'react-icons/ai';
 import StepContainer from '../form/StepContainer';
+import RemoveBackground from '../background/RemoveBackground';
 
-const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
+const GetPhotos = ({ onCompleted, onClear, images, proceed, goBack, removedBg, onRemovedBg }: {
     onCompleted: (images: HTMLImageElement[]) => void|Promise<void>;
     onClear: () => void;
     images: HTMLImageElement[];
     proceed: () => void;
+    goBack: () => void;
+    removedBg: boolean;
+    onRemovedBg: () => void;
 }): JSX.Element => {
 
     const hasImages = useMemo(() => {
@@ -22,6 +26,12 @@ const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
     const processImages = (images: HTMLImageElement[]) => {
         onCompleted(images);
     }
+
+    const removedBgs = (images: HTMLImageElement[]) => {
+        onCompleted(images);
+        onRemovedBg();
+    }
+
 
     return (
         <StepContainer>
@@ -58,13 +68,25 @@ const GetPhotos = ({ onCompleted, onClear, images, proceed }: {
                                 Clear Images
                             </button>
                         </div>
+                        {!removedBg && (
+                            <div className='col-span-12'>
+                                <RemoveBackground
+                                    images={images}
+                                    onCompleted={removedBgs} />
+                            </div>
+                        )}
                     </>
                 )}
             </div>
             <div className='mx-5 my-3'>&nbsp;</div>
-            <div className='absolute p-2 bottom-0 right-0'>
+            <div className='absolute p-2 left-0 bottom-0 right-0 flex items-center'>
                 <button className='px-3 py-1 flex items-center gap-2 text-background
-                    bg-primary rounded-lg disabled:bg-[#bababc]' disabled={!hasImages} onClick={proceed}>
+                    bg-primary rounded-lg disabled:bg-[#bababc]' onClick={goBack}>
+                    <BiChevronLeft />
+                    Back
+                </button>
+                <button className='px-3 py-1 flex items-center gap-2 text-background
+                    bg-primary rounded-lg disabled:bg-[#bababc] ml-auto' disabled={!hasImages || !removedBg} onClick={proceed}>
                     Next
                     <BiChevronRight />
                 </button>

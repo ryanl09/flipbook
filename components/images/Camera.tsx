@@ -7,6 +7,7 @@ import { useCaptureCount } from '../context/CaptureCountProvider';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useDimensions } from '../context/DimensionsProvider';
+import CountdownOverlay from '../form/CountdownOverlay';
 
 const IW = 300,
       IH = 225;
@@ -34,6 +35,7 @@ const Camera = ({ onCaptured, onReady }: {
     const [stream, setStream] = useState<MediaStream|null>(null);
 
     const [ready, setReady] = useState<boolean>(false);
+    const [showCountdown, setShowCountdown] = useState<boolean>(false);
 
     useEffect(() => {
         if (typeof navigator === 'undefined') {
@@ -85,6 +87,7 @@ const Camera = ({ onCaptured, onReady }: {
         }
 
         clearInterval(intervalId);
+        setShowCountdown(false);
         setIntervalId(null);
     }, [images, captureCount, intervalId]);
 
@@ -94,7 +97,10 @@ const Camera = ({ onCaptured, onReady }: {
 
         const interval = setInterval((): void => {
             if (ctx === null || video.current === null || canvas.current === null) {
-                throw new Error('Canvas context or video source is null')
+                clearInterval(interval);
+                stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+                setReady(false);
+                return;
             }
 
             ctx.drawImage(video.current, 0, 0, video.current.width, video.current.height);
@@ -120,8 +126,21 @@ const Camera = ({ onCaptured, onReady }: {
 
     return (
         <div className='grid grid-cols-12 gap-2'>
-            <video ref={video} width={width} height={height} className='col-span-12 sm:col-span-6'
-                autoPlay={true} muted={true} playsInline={true}></video>
+            <div className='col-span-12 sm:col-span-6'>
+                <div className='relative' style={{
+                    width: `${width}px`,
+                    height: `${height}px`,
+                }}>
+                    <video ref={video} width={width} height={height} 
+                        autoPlay={true} muted={true} playsInline={true}></video> 
+                    {showCountdown && (
+                        <CountdownOverlay
+                            seconds={5}
+                            onFinished={takePhotos} />
+                    )}
+                
+                </div>
+            </div>
             <div className='col-span-12 sm:col-span-6 p-2 border-2 border-[#e6e6e6] rounded-lg  mt-2'>
                 {ready ? (
                     <>
@@ -141,7 +160,9 @@ const Camera = ({ onCaptured, onReady }: {
                         </div>
                         <button className='rounded-lg transition-colors bg-primary hover:bg-primary-h
                             text-background font-semibold flex items-center gap-2 px-3 py-1 my-2'
-                            onClick={takePhotos}>
+                            onClick={() => {
+                                setShowCountdown(true)
+                            }}>
                             {running ? (
                                 <>
                                     <AiOutlineLoading3Quarters className='--spin' />

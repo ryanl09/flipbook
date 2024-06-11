@@ -1,8 +1,7 @@
 import { convertBlobToImage, convertImageToBlob } from "@/lib/util";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProgressBar from "../form/ProgressBar";
-import PreviewBook from "../create/Preview";
 import { useCaptureCount } from "../context/CaptureCountProvider";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BiChevronRight } from "react-icons/bi";
@@ -26,7 +25,6 @@ const RemoveBackground = ({ images, onCompleted }: {
         setIsRemoving(true);
 
         const imgs: HTMLImageElement[] = [];
-
         const canvas = document.createElement('canvas');
 
         for (var img of images) {

@@ -1,3 +1,4 @@
+import { FlipImage } from '@/global/types';
 import React, { useEffect, useMemo, useRef } from 'react';
 
 const IMAGES_PER_PAGE = 8;
@@ -19,7 +20,7 @@ const height = pageSize.height / (IMAGES_PER_PAGE * rowRatio) - imagePadding * 2
 const displayRatio = 0.1;
 
 type PageImage = {
-    img: HTMLImageElement;
+    img: FlipImage;
     rootIndex: number;
 }
 
@@ -28,9 +29,8 @@ interface Page {
     images: PageImage[];
 }
 
-const PrintPreview = ({ images, backgroundImage }: {
-    images: HTMLImageElement[];
-    backgroundImage?: HTMLImageElement|null;
+const PrintPreview = ({ images }: {
+    images: FlipImage[];
 }): JSX.Element => {
 
     const pages = useMemo((): Page[] => {
@@ -66,8 +66,7 @@ const PrintPreview = ({ images, backgroundImage }: {
                 return (
                     <div key={`${e.index}-page`} className='col-span-12 sm:col-span-6 md:col-span-4'>
                         <PagePreview
-                            page={e}
-                            backgroundImage={backgroundImage} />
+                            page={e} />
                     </div>
                 )
             })}
@@ -75,9 +74,8 @@ const PrintPreview = ({ images, backgroundImage }: {
     )
 }
 
-const PagePreview = ({ page, backgroundImage }: {
+const PagePreview = ({ page }: {
     page: Page;
-    backgroundImage?: HTMLImageElement|null;
 }): JSX.Element => {
 
     const canvasRef = useRef<HTMLCanvasElement|null>(null);
@@ -108,12 +106,11 @@ const PagePreview = ({ page, backgroundImage }: {
             ctx.textBaseline = 'top';
             ctx.font = '150px Arial';
 
-            console.log(backgroundImage)
-            if (backgroundImage) {
-                ctx.drawImage(backgroundImage, x, y, width, height);
+            if (image.img.background) {
+                ctx.drawImage(image.img.background, x, y, width, height);
             }
 
-            ctx.drawImage(image.img, x, y, width, height);
+            ctx.drawImage(image.img.image, x, y, width, height);
 
             ctx.fillText(image.rootIndex.toString(), x, y);
 
