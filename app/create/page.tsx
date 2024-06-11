@@ -7,9 +7,11 @@ import Logo from '@/components/Logo';
 import ChooseBackground from '@/components/create/ChooseBackground';
 import PrintBook from '@/components/create/PrintBook';
 import { CaptureCountProvider } from '@/components/context/CaptureCountProvider';
+import { DimensionsProvider } from '@/components/context/DimensionsProvider';
 
 const PageCreate = (): JSX.Element => {
     const [images, setImages] = useState<HTMLImageElement[]>([]);
+    const [background, setBackground] = useState<HTMLImageElement|null>(null);
     const clearImages = (): void => setImages([]);
 
     const [step, setStep] = useState<number>(1);
@@ -35,35 +37,39 @@ const PageCreate = (): JSX.Element => {
                 <Logo />
             </div>
             <CaptureCountProvider>
-                <div className='md:h-screen flex items-center justify-center'>
-                    {step === 1 && (
-                        <GetPhotos 
-                            onCompleted={onStepCompleted}
-                            images={images}
-                            proceed={proceed}
-                            onClear={clearImages} />
-                    )}
+                <DimensionsProvider>
+                    <div className='md:h-screen flex items-center justify-center'>
+                        {step === 1 && (
+                            <GetPhotos 
+                                onCompleted={onStepCompleted}
+                                images={images}
+                                proceed={proceed}
+                                onClear={clearImages} />
+                        )}
 
-                    {step === 2 && (
-                        <ChooseBackground
-                            onCompleted={onStepCompleted}
-                            images={images}
-                            goBack={goBack}
-                            proceed={proceed} />
-                    )}
+                        {step === 2 && (
+                            <ChooseBackground
+                                onCompleted={onStepCompleted}
+                                images={images}
+                                goBack={goBack}
+                                proceed={proceed}
+                                onBackgroundChanged={setBackground} />
+                        )}
 
-                    {step === 3 && (
-                        <PrintBook
-                            images={images}
-                            goBack={goBack}
-                            proceed={proceed} />
-                    )}
+                        {step === 3 && (
+                            <PrintBook
+                                images={images}
+                                goBack={goBack}
+                                proceed={proceed}
+                                backgroundImage={background} />
+                        )}
 
-                    <div className='hidden absolute md:flex bottom-0 py-4 w-full items-center justify-center'>
-                        <StepCounter step={step} />
+                        <div className='hidden absolute md:flex bottom-0 py-4 w-full items-center justify-center'>
+                            <StepCounter step={step} />
+                        </div>
+
                     </div>
-
-                </div>
+                </DimensionsProvider>
             </CaptureCountProvider>
         </>
     )

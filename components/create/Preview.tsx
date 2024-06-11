@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiPause, BiPlay } from 'react-icons/bi';
-
-const CW = 300,
-      CH = 300;
+import { useDimensions } from '../context/DimensionsProvider';
 
 const PLAYBACK_INTERVAL = 50; //ms
 
@@ -25,13 +23,15 @@ const PreviewBook = ({ images, backgroundImage }: {
         }
     }, []);
 
+    const { width, height } = useDimensions();
+
     useEffect(() => {
         if (ctx === null){
             return;
         }
 
         ctx.fillStyle = '#ccc';
-        ctx.fillRect(0, 0, CW, CH);
+        ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = '#fff';
         ctx.font = '40px Arial'
@@ -71,8 +71,11 @@ const PreviewBook = ({ images, backgroundImage }: {
 
     return (
         <>
-            <canvas ref={canvasRef} width={300} height={300}
-                className='rounded-lg shadow-sm w-[300px] h-[300px]'></canvas>
+            <canvas ref={canvasRef} width={width} height={height}
+                className='rounded-lg shadow-sm' style={{
+                    width: `${width}px`,
+                    height: `${height}px`
+                }}></canvas>
             <button className='flex items-center gap-2 px-3 py-1 bg-primary hover:bg-primary-h
                 transition-colors rounded-lg text-background semibold' onClick={handlePlay}>
                 {playing ? (

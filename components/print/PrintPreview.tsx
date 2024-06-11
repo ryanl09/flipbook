@@ -16,6 +16,8 @@ const colRatio = colCount / IMAGES_PER_PAGE;
 const width = pageSize.width / (IMAGES_PER_PAGE * colRatio) - imagePadding * 2;
 const height = pageSize.height / (IMAGES_PER_PAGE * rowRatio) - imagePadding * 2;
 
+const displayRatio = 0.1;
+
 type PageImage = {
     img: HTMLImageElement;
     rootIndex: number;
@@ -26,8 +28,9 @@ interface Page {
     images: PageImage[];
 }
 
-const PrintPreview = ({ images }: {
+const PrintPreview = ({ images, backgroundImage }: {
     images: HTMLImageElement[];
+    backgroundImage?: HTMLImageElement|null;
 }): JSX.Element => {
 
     const pages = useMemo((): Page[] => {
@@ -63,7 +66,8 @@ const PrintPreview = ({ images }: {
                 return (
                     <div key={`${e.index}-page`} className='col-span-12 sm:col-span-6 md:col-span-4'>
                         <PagePreview
-                            page={e} />
+                            page={e}
+                            backgroundImage={backgroundImage} />
                     </div>
                 )
             })}
@@ -71,8 +75,9 @@ const PrintPreview = ({ images }: {
     )
 }
 
-const PagePreview = ({ page }: {
+const PagePreview = ({ page, backgroundImage }: {
     page: Page;
+    backgroundImage?: HTMLImageElement|null;
 }): JSX.Element => {
 
     const canvasRef = useRef<HTMLCanvasElement|null>(null);
@@ -103,6 +108,11 @@ const PagePreview = ({ page }: {
             ctx.textBaseline = 'top';
             ctx.font = '150px Arial';
 
+            console.log(backgroundImage)
+            if (backgroundImage) {
+                ctx.drawImage(backgroundImage, x, y, width, height);
+            }
+
             ctx.drawImage(image.img, x, y, width, height);
 
             ctx.fillText(image.rootIndex.toString(), x, y);
@@ -112,7 +122,10 @@ const PagePreview = ({ page }: {
     }, [page]);
 
     return (
-        <div className='w-[255px] h-[330px]'>
+        <div className='w-[255px] h-[330px] ' style={{
+            width: `${Math.floor(pageSize.width * displayRatio)}px`,
+            height: `${Math.floor(pageSize.height * displayRatio)}px`
+        }}>
             <canvas width={pageSize.width} height={pageSize.height}
                 className='w-full h-full' ref={canvasRef}></canvas>
         </div>

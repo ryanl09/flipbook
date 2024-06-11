@@ -11,9 +11,7 @@ const BackgroundImageSet = ({ onSelected }: {
         const getImage = async(): Promise<void> => {
             const img = await loadImage('/forest.png');
 
-            setBgImages((prev: HTMLImageElement[]): HTMLImageElement[] => {
-                return [...prev, img];
-            });
+            setBgImages([img]);
         }
 
         getImage();

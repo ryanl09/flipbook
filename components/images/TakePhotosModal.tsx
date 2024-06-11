@@ -10,9 +10,15 @@ const TakePhotosModal = ({ onCaptured }: {
     const show = (): void => setShowing(true);
     const hide = (): void => setShowing(false);
 
+    const [isReady, setIsReady] = useState<boolean>(false);
+
     const acceptPhotos = (images: HTMLImageElement[]): void => {
         hide();
         onCaptured(images);
+    }
+
+    const onCameraReady = ():void => {
+        setIsReady(true);
     }
 
     return (
@@ -20,7 +26,8 @@ const TakePhotosModal = ({ onCaptured }: {
             <Modal showing={showing} hide={hide}>
                 {showing && (
                     <Camera
-                        onCaptured={acceptPhotos} />
+                        onCaptured={acceptPhotos}
+                        onReady={onCameraReady} />
                 )}
             </Modal>
             

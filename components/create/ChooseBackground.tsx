@@ -8,11 +8,12 @@ import RemoveBackground from '../background/RemoveBackground';
 import BackgroundImageSet from '../images/BackgroundImageSet';
 import StepContainer from '../form/StepContainer';
 
-const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
+const ChooseBackground = ({ images, onCompleted, goBack, proceed, onBackgroundChanged }: {
     images: HTMLImageElement[];
-    onCompleted: (images: HTMLImageElement[]) => void|Promise<void>;
+    onCompleted: (images: HTMLImageElement[], bgImage?: HTMLImageElement|null) => void|Promise<void>;
     goBack: () => void;
     proceed: () => void;
+    onBackgroundChanged: (background: HTMLImageElement) => void;
 }): JSX.Element => {
     const [removedBgs, setRemovedBgs] = useState<boolean>(false);
     const [backgroundImage, setBackgroundImage] = useState<HTMLImageElement|null>(null);
@@ -37,11 +38,12 @@ const ChooseBackground = ({ images, onCompleted, goBack, proceed }: {
 
     const onBgRemovalCompleted = (images: HTMLImageElement[]): void => {
         setRemovedBgs(true);
-        onCompleted(images);
+        onCompleted(images, backgroundImage);
     }
 
     const onBackgroundSelected = (backgroundImage: HTMLImageElement): void => {
         setBackgroundImage(backgroundImage);
+        onBackgroundChanged(backgroundImage)
     }
 
     return (
