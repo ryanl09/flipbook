@@ -8,11 +8,12 @@ import PreviewBook from '@/components/create/Preview';
 import { AiFillMinusCircle } from 'react-icons/ai';
 import StepContainer from '../form/StepContainer';
 import RemoveBackground from '../background/RemoveBackground';
+import { FlipImage } from '@/global/types';
 
 const GetPhotos = ({ onCompleted, onClear, images, proceed, goBack, removedBg, onRemovedBg }: {
     onCompleted: (images: HTMLImageElement[]) => void|Promise<void>;
     onClear: () => void;
-    images: HTMLImageElement[];
+    images: FlipImage[];
     proceed: () => void;
     goBack: () => void;
     removedBg: boolean;

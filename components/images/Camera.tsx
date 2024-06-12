@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import PreviewBook from '../create/Preview';
-import { AiOutlineLoading, AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BiChevronRight } from 'react-icons/bi';
 import ProgressBar from '../form/ProgressBar';
 import { useCaptureCount } from '../context/CaptureCountProvider';
@@ -8,9 +7,6 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useDimensions } from '../context/DimensionsProvider';
 import CountdownOverlay from '../form/CountdownOverlay';
-
-const IW = 300,
-      IH = 225;
 
 const Camera = ({ onCaptured, onReady }: {
     onCaptured: (images: HTMLImageElement[]) => void|Promise<void>;
@@ -98,8 +94,11 @@ const Camera = ({ onCaptured, onReady }: {
         const interval = setInterval((): void => {
             if (ctx === null || video.current === null || canvas.current === null) {
                 clearInterval(interval);
-                stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
                 setReady(false);
+
+                if (stream !== null) {
+                    stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+                }
                 return;
             }
 
@@ -117,7 +116,7 @@ const Camera = ({ onCaptured, onReady }: {
                 });
             }
 
-        }, captureDelay);
+        }, captureDelay * 1000);
 
         setIntervalId(interval);
     }

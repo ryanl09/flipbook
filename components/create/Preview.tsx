@@ -30,6 +30,10 @@ const PreviewBook = ({ images }: {
             return;
         }
 
+        if (!playing){
+            return;
+        }
+
         ctx.fillStyle = '#ccc';
         ctx.fillRect(0, 0, width, height);
 
@@ -43,7 +47,8 @@ const PreviewBook = ({ images }: {
         }
         ctx.drawImage(cur.image, 0, 0);
         ctx.fillText(current.toString(), 10, 10);
-    }, [current, images]);
+
+    }, [current, images, playing]);
 
 
     const handlePlay = (): void => {
@@ -72,7 +77,8 @@ const PreviewBook = ({ images }: {
             ctx.drawImage(cur.background, 0, 0);
         }
         ctx.drawImage(cur.image, 0, 0);
-    }, [images, ctx]);
+        console.log('draw 1');
+    }, []);
 
     return (
         <>

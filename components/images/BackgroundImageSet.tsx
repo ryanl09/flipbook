@@ -37,14 +37,13 @@ const BackgroundImageSet = ({ onSelected }: {
     }, []);
 
     const onImageSelected = async (index: number): Promise<void>  => {
-        onSelected(bgImage);
+        onSelected(backgrounds[index].url);
         setSelectedIndex(index);
     }
 
     const onBackgroundAdded = async (background: Background): Promise<void> => {
-        const img = await loadImage(`https://api.directecllc.com/${background.url}`);
-        setBackgrounds((prev: HTMLImageElement[]) => {
-            return [...prev, img];
+        setBackgrounds((prev: Background[]) => {
+            return [...prev, background];
         });
     }
 
@@ -52,7 +51,7 @@ const BackgroundImageSet = ({ onSelected }: {
     }
 
     
-    const deleteBackground = async (backgroundId: string): Promise<void> => {
+    const removeBackground = async (backgroundId: string): Promise<void> => {
         const { data } = await apolloClient.mutate({
             mutation: deleteBackground,
             variables: {
@@ -66,7 +65,7 @@ const BackgroundImageSet = ({ onSelected }: {
         }
         
         setBackgrounds((prev: Background[]): Background[] => {
-            return prev.fill((background: Background) => {
+            return prev.filter((background: Background) => {
                 return background.background_id !== backgroundId;
             })
         })
@@ -101,8 +100,6 @@ const SelectableImage = ({ isSelected, children }: {
     isSelected: boolean;
     children: React.ReactNode;
 }): JSX.Element => {
-
-    const apolloClient = useApolloClient();
 
     let borderStyle = isSelected ? 'border-2 border-gray-100 p-1 rounded-lg transition-all' : '';
     

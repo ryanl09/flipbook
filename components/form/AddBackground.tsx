@@ -35,7 +35,7 @@ const AddBackground = ({ onBackgroundAdded }: {
 
         req.open('POST', reqUrl, true);
         req.onreadystatechange = () => {
-            if (req.readyState === 4 /* && req.status === 200 */) {
+            if (req.readyState === 4 && req.status === 200) {
                 const data: BackgroundApiResponse = JSON.parse(req.responseText);
                 if (!data.status && data.url) {
                     addBackground(data.url)

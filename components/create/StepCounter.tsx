@@ -11,11 +11,11 @@ const StepCounter = ({ step }: {
 
     const icons: StepIcon[] = [
         {
-            title: 'camera',
-            icon: <IoMdCamera />
-        }, {
             title: 'image',
             icon: <FaImage />
+        }, {
+            title: 'camera',
+            icon: <IoMdCamera />
         }, {
             title: 'printer',
             icon: <AiFillPrinter />

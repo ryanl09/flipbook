@@ -9,6 +9,7 @@ import PrintBook from '@/components/create/PrintBook';
 import { CaptureCountProvider } from '@/components/context/CaptureCountProvider';
 import { DimensionsProvider } from '@/components/context/DimensionsProvider';
 import { loadImage } from '@/lib/util';
+import { FlipImage } from '@/global/types';
 
 const PageCreate = (): JSX.Element => {
     const [images, setImages] = useState<FlipImage[]>([]);
@@ -23,11 +24,18 @@ const PageCreate = (): JSX.Element => {
 
     const [step, setStep] = useState<number>(1);
 
+    useEffect(() => {
+        console.log(images)
+    }, [images]);
+
     const onStepCompleted = async (images: HTMLImageElement[]): Promise<void> => {
         setRemovedBg(false);
-        setImages(images.map((e: HTMLImageElement): FlipImage[] => {
+
+        const bgImage: HTMLImageElement|null = backgroundUrl ? await loadImage(`https://api.directecllc.com/${backgroundUrl}`) : null;
+        setImages(images.map((e: HTMLImageElement) => {
             return {
-                image: e
+                image: e,
+                background: bgImage,
             }
         }));
     }
@@ -41,7 +49,7 @@ const PageCreate = (): JSX.Element => {
             const backgroundImage = await loadImage(`https://api.directecllc.com/${backgroundUrl}`);
             
             setImages((prev: FlipImage[]): FlipImage[] => {
-                return prev.map((e: FlipImage): FlipImage[] => {
+                return prev.map(e => {
                     return {
                         image: e.image,
                         background: backgroundImage,
@@ -51,7 +59,7 @@ const PageCreate = (): JSX.Element => {
         }
 
         updateBackgrounds();
-    }, [backgroundUrl, images]);
+    }, [backgroundUrl]);
 
     const goBack = (): void => setStep((prev: number): number => { return prev - 1; });
     const proceed = (): void => setStep((prev: number): number => { return prev + 1; });

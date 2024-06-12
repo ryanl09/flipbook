@@ -9,6 +9,7 @@ const PrintBook = ({ images, goBack, proceed }: {
     goBack: () => void;
     proceed: () => void;
 }): JSX.Element => {
+    
     return (
         <StepContainer>
             <h1 className='font-semibold text-2xl'>Print</h1>

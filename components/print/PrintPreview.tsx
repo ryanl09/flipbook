@@ -1,5 +1,5 @@
 import { FlipImage } from '@/global/types';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { createRef, useEffect, useMemo, useRef } from 'react';
 
 const IMAGES_PER_PAGE = 8;
 const pageSize = {
@@ -60,24 +60,53 @@ const PrintPreview = ({ images }: {
         return pageObjects;
     }, [images]);
 
+    const canvasContainer = useRef<HTMLDivElement|null>(null);
+
+    const print = (): void => {
+        console.log(canvasContainer.current?.children)
+
+        const canvases = document.querySelectorAll('canvas');
+
+        let windowContent = `<html><head><title>Print Barcode</title></head><body>`;
+
+        canvases.forEach((e: HTMLCanvasElement, index: number) => {
+            windowContent += `<div style='page-break-after: always;'><img src="${e.toDataURL('image/png')}" width="${pageSize.width * .8}" height="${pageSize.height * .8}"></div>`;
+        });
+
+        windowContent += '</body></html>';
+
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.srcdoc = windowContent;
+        iframe.onload = function() {
+            if (iframe.contentWindow === null) {
+                return;
+            }
+            iframe.contentWindow.print();
+            setTimeout(() => document.body.removeChild(iframe), 100); // Delay for print dialog
+          };
+          document.body.appendChild(iframe);
+      
+          // Set iframe content using srcdoc attribute to avoid cross-origin issues
+    }
+
     return (
-        <div className='grid grid-cols-12'>
-            {pages?.map((e: Page) => {
-                return (
-                    <div key={`${e.index}-page`} className='col-span-12 sm:col-span-6 md:col-span-4'>
-                        <PagePreview
-                            page={e} />
-                    </div>
-                )
-            })}
-        </div>
+        <>
+            <div className='grid grid-cols-12' ref={canvasContainer}>
+                {pages?.map((e: Page, index: number) => {
+                    return (
+                        <React.Fragment key={`${e.index}-page`}>
+                            <PagePreview page={e} />
+                        </React.Fragment>
+                    )
+                })}
+            </div>
+            <button onClick={print}>print</button>
+        </>
     )
 }
 
-const PagePreview = ({ page }: {
-    page: Page;
-}): JSX.Element => {
-
+const PagePreview = ({ page }: { page: Page }) => {
     const canvasRef = useRef<HTMLCanvasElement|null>(null);
 
     useEffect(() => {
@@ -96,7 +125,8 @@ const PagePreview = ({ page }: {
         3 7
         4 8
         */
-        page.images.forEach((image: PageImage, index: number) => {
+
+        page.images.forEach((pageImage: PageImage, index: number) => {
             const row = index % rowCount;
             const col = Math.floor(index / rowCount);
             const x = col * (width + imagePadding * 2);
@@ -106,27 +136,25 @@ const PagePreview = ({ page }: {
             ctx.textBaseline = 'top';
             ctx.font = '150px Arial';
 
-            if (image.img.background) {
-                ctx.drawImage(image.img.background, x, y, width, height);
+            if (pageImage.img.background) {
+                ctx.drawImage(pageImage.img.background, x, y, width, height);
             }
 
-            ctx.drawImage(image.img.image, x, y, width, height);
+            ctx.drawImage(pageImage.img.image, x, y, width, height);
 
-            ctx.fillText(image.rootIndex.toString(), x, y);
+            ctx.fillText(pageImage.rootIndex.toString(), x, y);
 
             //console.log(xPos, yPos);
         });
     }, [page]);
 
     return (
-        <div className='w-[255px] h-[330px] ' style={{
-            width: `${Math.floor(pageSize.width * displayRatio)}px`,
-            height: `${Math.floor(pageSize.height * displayRatio)}px`
-        }}>
-            <canvas width={pageSize.width} height={pageSize.height}
-                className='w-full h-full' ref={canvasRef}></canvas>
-        </div>
+        <canvas width={pageSize.width} height={pageSize.height} id={`canvas-${page.index}`}
+            ref={canvasRef} className='col-span-12 sm:col-span-6 md:col-span-4' style={{
+                width: `${Math.floor(pageSize.width * displayRatio)}px`,
+                height: `${Math.floor(pageSize.height * displayRatio)}px`
+            }}></canvas>
     )
-}
+};
 
 export default PrintPreview;
