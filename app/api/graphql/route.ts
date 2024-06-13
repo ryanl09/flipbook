@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { NextRequest } from "next/server";
@@ -11,7 +13,7 @@ let handlerPromise = (async () => {
     });
 
     return startServerAndCreateNextHandler(apolloServer, {
-        context: async (req: NextRequest) => {
+        context: async (req: NextRequest): Promise<{ req: NextRequest}> => {
             /* authentication will go here */
 
             return {

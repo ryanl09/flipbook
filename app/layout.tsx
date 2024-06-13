@@ -6,7 +6,7 @@ import { ApolloClientProvider } from "@/components/context/ApolloClientProvider"
 const redHatDisplay = Red_Hat_Display({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Flip Em",
+  title: "Flip Em Off",
   description: "",
 };
 
