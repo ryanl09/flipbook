@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { AiFillPrinter } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
@@ -11,11 +13,11 @@ const StepCounter = ({ step }: {
 
     const icons: StepIcon[] = [
         {
-            title: 'camera',
-            icon: <IoMdCamera />
-        }, {
             title: 'image',
             icon: <FaImage />
+        }, {
+            title: 'camera',
+            icon: <IoMdCamera />
         }, {
             title: 'printer',
             icon: <AiFillPrinter />

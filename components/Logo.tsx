@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 
 const Logo = (): JSX.Element => {
@@ -6,7 +8,7 @@ const Logo = (): JSX.Element => {
           <Image src="/fb-transparent-sized.png" width={30} height={30} alt="" />
           <span>
             Flip
-            <span className="text-primary">Book</span>
+            <span className="text-primary">Em</span>
           </span>
         </div>
     )    

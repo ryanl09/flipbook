@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { BiX } from 'react-icons/bi';
 

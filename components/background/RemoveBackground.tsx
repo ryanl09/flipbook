@@ -1,14 +1,16 @@
+'use client';
+
 import { convertBlobToImage, convertImageToBlob } from "@/lib/util";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ProgressBar from "../form/ProgressBar";
-import PreviewBook from "../create/Preview";
 import { useCaptureCount } from "../context/CaptureCountProvider";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BiChevronRight } from "react-icons/bi";
+import { FlipImage } from "@/global/types";
 
 const RemoveBackground = ({ images, onCompleted }: {
-    images: HTMLImageElement[];
+    images: FlipImage[];
     onCompleted: (images: HTMLImageElement[]) => void|Promise<void>;
 }): JSX.Element => {
     const [isRemoving, setIsRemoving] = useState<boolean>(false);
@@ -26,11 +28,10 @@ const RemoveBackground = ({ images, onCompleted }: {
         setIsRemoving(true);
 
         const imgs: HTMLImageElement[] = [];
-
         const canvas = document.createElement('canvas');
 
         for (var img of images) {
-            const stream = await convertImageToBlob(img, canvas);
+            const stream = await convertImageToBlob(img.image, canvas);
             const formdata = new FormData();
 
             formdata.append('file', stream);
@@ -59,7 +60,9 @@ const RemoveBackground = ({ images, onCompleted }: {
     };
 
     const skipBgRemoval = (): void => {
-        onCompleted(images);
+        onCompleted(images.map((e: FlipImage) => {
+            return e.image;
+        }));
         setIsRemoving(false);
     }
 

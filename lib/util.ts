@@ -39,6 +39,7 @@ export const convertBlobToImage = (blob: Blob, canv?: HTMLCanvasElement): Promis
 export const loadImage = (src: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
         const img = new Image();
+        img.crossOrigin = '';
         img.src = src;
         img.onload = () => {
             resolve(img);

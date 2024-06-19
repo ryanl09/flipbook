@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import Modal from '../form/Modal';
 import { BiCamera } from 'react-icons/bi';
