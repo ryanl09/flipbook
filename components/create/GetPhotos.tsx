@@ -1,4 +1,4 @@
-'use client';i
+'use client';
 
 import React, { useState, useMemo } from 'react';
 import { BiChevronRight, BiChevronLeft, BiCamera } from 'react-icons/bi';
