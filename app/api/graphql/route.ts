@@ -6,19 +6,26 @@ import { NextRequest } from "next/server";
 import { typeDefs } from "@/graphql/typeDefs";
 import { resolvers } from "@/graphql/resolvers";
 
+let handlerPromise = (async () => {
     const apolloServer = new ApolloServer({
         typeDefs,
         resolvers,
     });
 
+    return startServerAndCreateNextHandler(apolloServer, {
+        context: async (req: NextRequest): Promise<{ req: NextRequest}> => {
+            /* authentication will go here */
 
-const handler = startServerAndCreateNextHandler(apolloServer, {
-    context: async (req: NextRequest) => {
+            return {
+                req,
+            }
+        },
+    });
+})();
 
-      return {
-        req,
-      };
-    },
-  });
-// Export the handler for GET and POST requests
-export { handler as GET, handler as POST };
+const route = async (req: NextRequest) => {
+    const handler = await handlerPromise;
+    return handler(req);
+};
+
+export { route as GET, route as POST };
