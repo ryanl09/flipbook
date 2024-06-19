@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiPause, BiPlay } from 'react-icons/bi';
 import { useDimensions } from '../context/DimensionsProvider';

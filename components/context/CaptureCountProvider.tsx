@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 export const CaptureCountContext = createContext<CountContext>({ captureCount: 40, updateCaptureCount: () => {} });

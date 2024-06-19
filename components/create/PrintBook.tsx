@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import StepContainer from '../form/StepContainer';
 import PrintPreview from '../print/PrintPreview';

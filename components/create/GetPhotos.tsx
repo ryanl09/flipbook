@@ -1,3 +1,5 @@
+'use client';i
+
 import React, { useState, useMemo } from 'react';
 import { BiChevronRight, BiChevronLeft, BiCamera } from 'react-icons/bi';
 import Camera from '../images/Camera';

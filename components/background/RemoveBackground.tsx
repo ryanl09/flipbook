@@ -1,3 +1,5 @@
+'use client';
+
 import { convertBlobToImage, convertImageToBlob } from "@/lib/util";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";

@@ -1,3 +1,5 @@
+'use client';
+
 import { ImageDimensions } from "@/global/types";
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 

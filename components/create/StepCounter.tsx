@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { AiFillPrinter } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";

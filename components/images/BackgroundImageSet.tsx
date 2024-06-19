@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { loadImage } from '@/lib/util';
 import { AiFillPlusCircle } from 'react-icons/ai';

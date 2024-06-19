@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef } from 'react';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { useApolloClient } from '@apollo/client';

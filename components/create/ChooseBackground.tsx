@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 import BackgroundImageSet from '../images/BackgroundImageSet';

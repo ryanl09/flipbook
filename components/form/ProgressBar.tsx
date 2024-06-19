@@ -1,3 +1,5 @@
+'use client';
+
 const ProgressBar = ({ progress, max }: {
     progress: number;
     max: number;

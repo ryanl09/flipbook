@@ -1,3 +1,5 @@
+'use client';
+
 import { FlipImage } from '@/global/types';
 import React, { createRef, useEffect, useMemo, useRef } from 'react';
 

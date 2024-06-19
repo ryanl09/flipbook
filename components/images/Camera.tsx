@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BiChevronRight } from 'react-icons/bi';
