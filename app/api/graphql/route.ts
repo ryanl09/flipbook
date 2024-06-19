@@ -12,9 +12,6 @@ import { resolvers } from "@/graphql/resolvers";
     });
 
 
-export { route as GET, route as POST };
-
-
 const handler = startServerAndCreateNextHandler(apolloServer, {
     context: async (req: NextRequest) => {
 
