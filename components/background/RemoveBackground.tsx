@@ -36,7 +36,7 @@ const RemoveBackground = ({ images, onCompleted }: {
 
             formdata.append('file', stream);
 
-            const data = await fetch('https://api.directecllc.com/backgroundapi/api/remove', {
+            const data = await fetch('https://rembg.directecllc.com/api/remove', {
                 method: 'POST',
                 body: formdata,
             });
