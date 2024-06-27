@@ -4,4 +4,18 @@ The user will either upload photos or capture them within the application, selec
 
 NextJS, ReactJS, GraphQL, TypeScript
 
-* Step 1
+## Step 1
+
+Choose the background image you want for the images.
+
+## Step 2
+
+Collect the images 
+
+## Step 3 
+
+Remove the backgrounds from the images and preview the result
+
+## Step 4
+
+Adjust the paper size & print the images
