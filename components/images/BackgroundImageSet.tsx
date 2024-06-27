@@ -10,6 +10,7 @@ import { useIsAdmin } from '../context/IsAdminContext';
 import { getBackgrounds } from '@/graphql/queries';
 import { deleteBackground } from '@/graphql/mutations';
 import { useDimensions } from '../context/DimensionsProvider';
+import { BiTrash } from 'react-icons/bi';
 
 const BackgroundImageSet = ({ onSelected }: {
     onSelected: (img: string) => void|Promise<void>;
@@ -48,10 +49,6 @@ const BackgroundImageSet = ({ onSelected }: {
             return [...prev, background];
         });
     }
-
-    const onBackgroundDeleted = (backgroundId: string) => {
-    }
-
     
     const removeBackground = async (backgroundId: string): Promise<void> => {
         const { data } = await apolloClient.mutate({
@@ -86,10 +83,18 @@ const BackgroundImageSet = ({ onSelected }: {
                     <div className='col-span-6 md:col-span-4 lg:col-span-3' key={e.background_id}>
                         <SelectableImage isSelected={index === selectedIndex}>      
                             <img src={`https://api.directecllc.com/${e.url}`} width={width} height={width} alt=''
-                                className={`rounded-lg cursor-pointer hover:scale-105 transition-all hover:shadow-sm`}
+                                className={`rounded-lg cursor-pointer hover:scale-105 transition-all hover:shadow-sm bg-img`}
                                 onClick={() => {
                                     onImageSelected(index)
                                 }} />
+                            <div className="img-overlay absolute right-0 top-0">
+                                <button className='bg-red-100/30 text-white hover:bg-red-200 transition-colors p-2
+                                    rounded-lg' onClick={() => {
+                                        removeBackground(e.background_id)
+                                    }}>
+                                    <BiTrash />
+                                </button>
+                            </div>
                         </SelectableImage>
                     </div>
                 )
@@ -106,7 +111,7 @@ const SelectableImage = ({ isSelected, children }: {
     let borderStyle = isSelected ? 'border-2 border-gray-100 p-1 rounded-lg transition-all' : '';
     
     return (
-        <div className={borderStyle}>
+        <div className={`${borderStyle} relative`}>
             {children}
         </div>
     )

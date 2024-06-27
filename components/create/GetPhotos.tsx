@@ -50,7 +50,8 @@ const GetPhotos = ({ onCompleted, onClear, images, proceed, goBack, removedBg, o
                             <h2 className='text-lg'>Upload</h2>
                             <div className='grid grid-cols-12 gap-2'>
                                 <div className='col-span-12 sm:col-span-6'>
-                                    <PhotoUpload />
+                                    <PhotoUpload
+                                        onUploaded={processImages} />
                                 </div>
                                 <div className='col-span-12 sm:col-span-6'>
                                     <VideoUpload />

@@ -57,7 +57,16 @@ export const resolvers = {
         deleteBackground: async(parent: any, { backgroundId }: {
             backgroundId: string;
         }, ctx: any): Promise<boolean> => {
-            return false;
+            const status = await prisma.backgrounds.update({
+                data: {
+                    active: false
+                },
+                where: {
+                    background_id: backgroundId
+                }
+            });
+
+            return !status.active;
         },
     },
     Event: {

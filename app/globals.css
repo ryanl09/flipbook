@@ -97,3 +97,11 @@
         opacity: 0;
     }
 }
+
+.img-overlay {
+    display:none;
+}
+
+.bg-img:hover + .img-overlay, .img-overlay:hover {
+    display: block;
+}
