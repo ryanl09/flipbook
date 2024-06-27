@@ -4,4 +4,4 @@ The user will either upload photos or capture them within the application, selec
 
 NextJS, ReactJS, GraphQL, TypeScript
 
-#Step 1
+* Step 1
