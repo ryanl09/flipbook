@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ApolloClientProvider } from "@/components/context/ApolloClientProvider";
 
-const redHatDisplay = Red_Hat_Display({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Flip Em Off",
   description: "",
