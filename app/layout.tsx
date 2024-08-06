@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${redHatDisplay.className} bg-background relative`}>
+      <body className={`bg-background relative`}>
         <ApolloClientProvider>
           {children}
         </ApolloClientProvider>
