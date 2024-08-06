@@ -8,10 +8,7 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "prisma generate && next build",
-    "electron-pack": "electron-builder --dir",
-    "electron-build": "electron-builder",
     "lint": "next lint"
   },
   "build": {
@@ -30,7 +27,6 @@
     "@apollo/client": "^3.10.4",
     "@as-integrations/next": "^3.0.0",
     "@prisma/client": "^5.15.0",
-    "electron-is-dev": "^3.0.1",
     "graphql-tag": "^2.12.6",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
@@ -45,8 +41,6 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "electron": "^31.1.0",
-    "electron-builder": "^24.13.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
